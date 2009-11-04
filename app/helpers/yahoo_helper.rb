@@ -1,0 +1,2 @@
+module YahooHelper
+end
