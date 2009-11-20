@@ -1,0 +1,16 @@
+<table><tr>
+<% @bads.each_with_index do |b,i| %>
+
+<td>
+<%= b.id %> <br>	
+<%= image_tag b.photo.url(:thumb) %> 
+</td>
+
+<% if (i+1) % 15 == 0%>
+<tr></tr>
+<% end %>
+
+
+
+<% end %>
+</tr><table>

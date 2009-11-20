@@ -1,0 +1,13 @@
+<div style='text-align:left'>
+
+<table>
+<% @screenshots.each_with_index do |s,i| %>
+
+<tr>
+<td><%= i + 1%>.</td>
+<td><%= s.keywords.join(',')%></td>
+</tr>
+<% end %>	
+</table>
+
+</div>

@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+ <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+ <title>SIKULI Search</title>
+ <%= javascript_include_tag 'prototype'%>
+ <%= javascript_include_tag 'effects'%>
+ <%= javascript_include_tag 'lowpro' %>
+ <% javascript_include_tag 'remote'%> 
+ <%= javascript_include_tag 'application'%> 
+ <%= javascript_include_tag 'lightbox'%> 
+ <%= active_scaffold_includes %>
+ 
+ <%= stylesheet_link_tag('lightbox')%>
+
+
+<style>
+.large_lazy_photo-column{
+vertical-align: top;
+}
+body, p, td, th, li
+{
+	font-size: 90%;
+	color: #333333;
+	font-family: Arial,Helvetica,sans-serif;
+}	
+.photo {
+	border: 1px #cccccc solid;
+	padding: 2px;
+}
+h3{
+	color: #444444;
+}			
+</style>
+
+</head>
+
+<body>
+	
+	
+	
+<center>
+<div id="content">
+<%= yield  %>
+</div>
+</center>
+
+</body>
+</html>

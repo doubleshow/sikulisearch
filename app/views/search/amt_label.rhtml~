@@ -1,0 +1,5 @@
+<% @matches.each do |m,type| %>
+
+<%= image_tag m.url %> <%= type %><br>
+
+<% end %>

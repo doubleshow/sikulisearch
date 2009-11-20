@@ -1,0 +1,136 @@
+<style>
+
+body, p, td, th, li
+{
+	font-size: 90%;
+	color: #333333;
+	font-family: Arial,Helvetica,sans-serif;
+}
+	
+#matches {
+/*	height: 800px;*/
+/*	width: 600px;*/
+/*	overflow: auto;*/
+	border: 1px solid #cccccc;
+}	
+td {
+	text-align: center;
+	border: 1px solid #cccccc;	
+}
+
+.photo img{
+	border: 1px #cccccc solid;
+	padding: 2px;
+}
+
+.odd {
+/*	background-color:  #E9E9E9;*/
+}
+
+
+.url {
+	color: #008200;
+}
+
+.title {
+	font-size: 14px;
+}
+
+.query {
+	background-color: #FFDDDD;
+}
+
+</style>
+<% m = [@matched_pdf_figures[:ocr].size,@matched_pdf_figures[:vision].size].max-1%>		
+<% n = @matched_pdf_figures.size %>
+<table cellpadding=0 cellborder=0>	
+
+	<tr><td>Rank</td>
+	<% (1..m+1).each do |i| %>
+		<td><%= i %></td>
+	<% end %>	
+	</tr>
+		
+	<tr><td>Vision</td>
+	<% @matched_pdf_figures[:vision].each_with_index do |pdf_figure,i| %>
+			<td valign="top" align="center">
+			<div class='photo' style="margin-right:10px;">
+				<%= image_tag pdf_figure.photo.url(:medium) %>
+			</div>
+			</td>
+	<% end %>
+	</tr>
+
+	<tr class='query'><td>Query</td>
+	<% (1..m+1).each do |i| %>
+		<td><%= image_tag @query.photo.url(:medium) %></td>
+	<% end %>	
+	</tr>
+	
+	
+	<tr><td>OCR</td>
+	<% @matched_pdf_figures[:ocr].each_with_index do |pdf_figure,i| %>
+			<td valign="top" align="center">
+			<div class='photo' style="margin-right:10px;">
+				<%= image_tag pdf_figure.photo.url(:medium) %>
+			</div>
+			</td>
+	<% end %>
+	</tr>
+</table>
+
+<h1>Details</h1>
+<p>
+<p>
+	
+<table>
+	<tr><td>Rank</td>
+		<td>Vision Result</td>
+		<td>Query</td>
+		<td>OCR Result</td>
+		
+
+<% (0..m).each do |i| %>
+	<% ocr_pdf_figure = @matched_pdf_figures[:ocr][i]
+	   vision_pdf_figure = @matched_pdf_figures[:vision][i]	   
+	%>
+	<tr class=<%= cycle ('odd', 'even')%>>
+		<td valign="top" align="center">
+		<%= i + 1 %>
+		</td>
+		<td valign="top" align="center">
+		<div class='photo' style="margin-right:10px;">		
+			<%= image_tag vision_pdf_figure.photo.url unless vision_pdf_figure.nil?%>		
+		</div>		
+		<div style="text-align:left;">
+			<pre><%= vision_pdf_figure.ocr unless vision_pdf_figure.nil?%></pre>
+		</div>					
+		</td>
+		
+		<td valign="top" align="center" class="query">
+		<div class='photo' style="margin-right:10px;">
+		
+			<%= image_tag @query.photo.url %>		
+		</div>	
+		<div style="text-align:left;">
+		<pre><%= @query_ocr %></pre>
+		</div>			
+		</td>				
+
+				
+		<td valign="top" align="center">
+		<div class='photo' style="margin-right:10px;">
+		
+			<%= image_tag ocr_pdf_figure.photo.url unless ocr_pdf_figure.nil?%>
+		
+		</div>
+		<div style="text-align:left;">
+		<pre><%= ocr_pdf_figure.ocr unless ocr_pdf_figure.nil?%></pre>
+		</div>
+		</td>
+	</tr>
+
+		
+			
+<% end %>
+</table>

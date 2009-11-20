@@ -1,0 +1,6 @@
+<div style='text-align:left;width:400'>
+<h2>Books in our library:</h2>
+<% @book_titles.each_with_index do |title,i| %>
+	<%= i+1%> : <%= title %> <br>
+<% end %>
+</div>

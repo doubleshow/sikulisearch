@@ -1,0 +1,83 @@
+<style>
+body, p, td, th, li
+{
+	font-size: 90%;
+	color: #333333;
+	font-family: Arial,Helvetica,sans-serif;
+}	
+	
+#left{
+	padding: 5px;
+}
+#right{
+	padding: 5px;
+}
+.photo {
+	border: 1px #cccccc solid;
+	padding: 2px;
+}
+#sikuli{
+	width: 925px;
+	
+}
+#upload {
+	position: relative;
+	text-align:left;
+	width: 450px;
+	left: 120px;
+	height: 0px;
+}		
+		
+h3{
+	color: #444444;
+}		
+		
+</style>
+
+
+
+<h2>Visual Book Search</h2>
+
+
+<%= link_to "#{PdfBook.count} books", :action => 'books' %>, 
+<%= PdfPage.count %> pages, <%= PdfFigure.count %> figures.
+<hr>
+
+1. Specify search terms: <%= text_field_tag 'search_terms', 'windows', :size=>'50', :id =>"search_terms"%>
+
+<br>
+<br>
+
+2. Click on one of the sample query images below to search
+for relevant figures in a library of computer books.
+<br>
+<br>
+<table>		
+<% @queries.in_groups_of(5) do |group| %>
+
+	<tr>
+	<% group.compact.each do |query| %>
+		<td>
+		    <% link_to image_tag(query.photo.url(:medium), :class=>'photo'), :action => 'query_result', :query_id => query.id%>
+	   	    <% form_tag 'query_result' do %>
+			 	 <%= hidden_field_tag 'query_id', query.id %>
+			 	 <%= hidden_field_tag "search_terms", '', :id => "search_terms#{query.id}" %>				 
+				 <%= query.id%>
+				 <%= image_submit_tag query.photo.url, :class=>'photo',
+					:onclick => "$('search_terms#{query.id}').value = $('search_terms').value;" %>
+   			 <% end %>
+		</td>	
+	<% end %>
+	</tr>
+	
+<% end %>
+</table>
+
+
+
+<hr>
+
+<b>Disclaimer:</b> The content of this website is for academic research purpose only. 
+The copyright of the content belongs to respective copyright owners. Downloading
+and/or distributing the content is strictly forbidden.
+

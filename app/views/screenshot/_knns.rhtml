@@ -1,0 +1,34 @@
+<div id=<%="labelable-#{@labelable.id}-knns"%>>
+<style>
+.correct{
+	border: red 4px solid;	
+}
+</style>	
+
+	
+
+
+<table><tr>
+<% @labelable.knn_photos.each_with_index do |photo,i| %>
+<td>
+
+	<%= photo.id %><br>
+	
+	<%= link_to_remote image_tag(photo.url(:medium), :class => @labelable.labels.include?(photo.id) ? 'correct' : 'incorrect'), 
+		:url => {:action => 'add_label', :id => @labelable.id, :label => photo.id }%>
+	
+	<%= link_to 'zoom',  photo.url(:original),:target=>'_blank'%>
+
+</td>
+
+<% if (i+1) % 5 == 0 %>
+</tr><tr>
+<% end %>
+
+<% end %>
+</tr>
+</table>
+
+	</div>
+
+</div>

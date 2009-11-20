@@ -1,0 +1,25 @@
+<div id=<%="labelable-#{@labelable.id}-labels"%>>	
+
+<span style='font-size:30px'>	
+<% if @labelable.labels.include?(0) %>	
+SELECTED<br>
+<% end %>
+</span>
+<span style='font-size:20px'>	
+<%= link_to_remote '[select]', :url => {:action => 'add_label', :id => @labelable.id, :label => 0} %>
+<%= link_to_remote '[deselect]', :url => {:action => 'remove_label', :id => @labelable.id, :label => 0} %>
+</span>
+
+
+<table>
+<% @labelable.label_photos.each do |photo| %>
+<tr><td>
+	<%= photo.id %><br>
+	<%= image_tag photo.url, :height=>100%><br>
+	<%= link_to_remote '[-]', :url => {:action => 'remove_label', :id => @labelable.id, :label => photo.id }%>	
+</td></tr>
+<% end %>
+
+</table>
+
+</div>

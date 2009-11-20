@@ -1,0 +1,320 @@
+<html>
+  <head>
+    
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    
+<title>SIKULI Search</title>
+<% if @amt %>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript"></script>
+<script src="http://projects.allmarkedup.com/jquery_url_parser/jquery.url.packed.js" type="text/javascript"></script>
+<% end %>
+
+<% if @example %>
+<link rel="exhibit/data"  type="application/jsonp" href="http://spreadsheets.google.com/feeds/list/tj5PxBBZuEtKjlxSDSu-3pA/od6/public/basic?gid=1&alt=json-in-script"  ex:converter="googleSpreadsheets" />     
+   
+<% else %>
+<link rel="exhibit/data"  type="application/json" href="<%= @json_url%>" />
+  
+<% end %>
+<script src="http://static.simile.mit.edu/exhibit/api-2.1.0/exhibit-api.js" type="text/javascript"></script>
+    
+
+
+<style>
+
+  body{
+  font-size:13px;
+  font-family:arial,sans-serif;
+  }
+
+  .title{
+  font-size:16px;
+  font-weight:normal;
+  }
+
+  .title a:link{
+  font-weight:normal;
+  }
+
+  .description{
+  font-size: 14px;
+}
+
+  .source{
+  font-size:14px;
+  color:green;
+  font-style:normal;
+  }
+
+  .tag{
+  font-size:90%;
+  color:blue;
+  }
+
+  .pageno{
+  font-size:70%;
+  color: red;
+  }
+
+
+  .actionLink a:link, .actionLink a:visited, .actionLink a:active{
+  font-size: 12px;
+  color: #444499;
+  }
+
+
+  td{
+  vertical-align: top;
+  font-size: 14px;
+  }
+
+  .thumb{
+  text-align:center;
+  border: 1px black solid;
+  }
+
+  .txt{
+  height:500px;
+  width:800px;OA
+  overflow:auto;
+  border:1px solid #333333;
+  margin:2px;
+  }
+
+  .webpage{
+  width:546px;
+  }
+
+  .source{
+  color: green;
+  }
+
+  .result_type{
+  color: blue;
+  font-size:smaller;
+  }
+
+.search-box{
+  padding: 2px;
+  border: 1px solid #777;
+}
+  
+  .facet-ResourceType{
+  border: 1px solid black;
+  }
+
+
+  a:link, a:visited, a:active{
+  color: blue;
+  }
+
+  .highlight0{
+  background-color: yellow;
+  }
+  .highlight1{
+  background-color: cyan;
+  }
+  .highlight2{
+  background-color: green;
+  }
+
+  .facet-title{
+  font-weight: bold;
+  font-size:90%;
+  padding-bottom: 2px;
+  }
+
+  .copy-button {
+  float: right;
+  }
+
+  .exhibit-tileView-body {
+  padding-left: 20px;
+  }
+
+  /* the filter boxes at the top */
+
+  .exhibit-facet-header-title{
+  font-size: 90%;
+  }
+
+  div.exhibit-facet-body-frame {
+  margin-top:2px;
+  border: 1px solid #777;
+  }
+  div.exhibit-facet-value-count{
+  color: #222;
+  }
+
+  div.exhibit-facet-value {
+  padding:0px;
+  }
+  div.exhibit-facet-header {
+  padding: 0px;
+  }
+
+  .exhibit-action{
+  display: none;
+  }
+
+
+  /* get rid of the numbering*/
+  ol.exhibit-tileView-body {
+  padding: 0px;
+  margin:  0px;
+  }
+  .exhibit-tileView-body li {
+  list-style: none;
+  }
+
+  .exhibit-collectionView-header {
+  display: none;
+  }
+  .exhibit-collectionView-header-sortControls {
+  display: block;
+  }
+
+  .exhibit-cloudFacet-body {
+  font-size: smaller;
+  }
+
+  .exhibit-cloudFacet-title {
+  font-size: 90%;
+  }
+
+
+</style>
+
+  </head>
+
+  <body>
+    <script>
+      <!-- Exhibit IE8 patch -->
+      Exhibit.getAttribute = function(elmt, name, splitOn) {
+      if (elmt) {
+      try {
+      var value = elmt.getAttribute(name);
+      if (value == null || value.length == 0) { // previously: if (value == null) {
+      value = elmt.getAttribute("ex:" + name);
+      }
+      if (splitOn == null) {
+      return value;
+      }
+      var values = value.split(splitOn);
+      for (var i = 0; value = values[i]; i++) {
+      values[i] = value.trim();//replace(/^\s+|\s+$/g, '');
+      }
+      return values;
+      } catch(e) {
+      return null;
+      }
+      
+      } else {
+      return null;
+      }
+      };
+    </script>
+
+
+
+
+    <% if @amt %>
+    <%= render :partial => 'amt_instruction' %>
+    <hr>
+
+    <form id="mturk_form" method="post" action="http://www.mturk.com/mturk/externalSubmit" onSubmit="return validFormCheck()">
+      <input type="hidden" id="assignmentId" name="assignmentId" value="" />
+      <% end %>
+
+
+
+
+      <table>
+	<tr>
+	  <% if not @amt %>
+	  <td>
+	      <div class="facet-title">Image</div>
+	      <div class="search-box" style="text-align:center">
+	      <%= image_tag @query_photo.url, :width=>150, :class=>'thumb' %>
+	      </div>	    
+	      <p>
+	      <div class="facet-title">Keywords</div>
+	      <div class="search-box">
+		<input type="text" name="" value=""><%= image_tag 'icon_search.gif', :align=>'top',
+		:style => 'margin-left: 5px'%>
+	      </div>
+	      
+ <!--div ex:role="facet"    ex:expressions=".description, .title"
+   ex:facetClass="TextSearch" ex:facetLabel="Keywords">
+ </div-->
+	    <p>
+	      <div ex:role="facet" ex:expression=".resourceType" ex:height="80px"
+		   ex:scroll="true" ex:facetLabel="Categories">
+	      </div>
+
+	    <p>
+	      <div ex:role="facet" ex:expression=".sites"
+		   ex:scroll="true" ex:facetLabel="Sites" ex:showMissing="false">
+	      </div>
+
+	      <p>
+	      <div ex:role="facet" 
+		   ex:facetClass="Cloud"
+		   ex:expression=".tags"
+		   ex:showMissing="false"
+		   ex:facetLabel="Tags"
+		   ex:height="150px">
+	      </div>
+
+
+	  </td>
+
+	  <% end %>
+
+
+
+	<td style="padding-left: 20px;">
+	  <% if @example %>
+	  <span  style="float:right;font-size:14px;">Results <b>1</b> - <b>10</b> of <b>54</b></span><br>
+	  <% end %>
+	  <%= render :partial => 'page_lense' %>
+	  <div ex:role="view" ex:showAll="true" ex:group="false"></div>
+      </td></tr>
+    </table>
+
+
+
+<% if @amt %>
+
+<hr>
+<input id="submitButton" type="submit" name="Submit" value="Submit" />
+</form>
+
+<script type='text/javascript'>
+    /*<![CDATA[*/
+        // From the Jquery plugin - http://projects.allmarkedup.com/jquery_url_parser/
+        var assignmentId = $.url.param("assignmentId");
+        $('#assignmentId').attr('value',assignmentId);
+
+    //
+    // Check if the worker is PREVIEWING the HIT or if they've ACCEPTED the HIT
+    //
+    if (assignmentId == "ASSIGNMENT_ID_NOT_AVAILABLE")
+    {
+      // If we're previewing, disable the button and give it a helpful message
+      $('#submitButton').attr('disabled','disabled');;
+      $('#submitButton').attr('value',"You must ACCEPT the HIT before you can submit the results.");
+    }
+
+
+    /*]]>*/
+</script>
+<% end %>
+
+
+
+
+
+  </body>
+
+</html>

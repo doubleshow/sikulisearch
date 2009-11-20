@@ -1,0 +1,23 @@
+<div id="queries">
+
+<div id="form">
+
+<h1>Choose a query image by clicking on an image</h1>
+<table>
+<% @queries.in_groups_of(5).each do |group| %>
+	<tr>
+	<% group.compact.each do |query| %>	
+		<td>
+			<div id=<%="query#{query.id}"%> class="photo">			
+		<%= link_to_remote image_tag(query.photo.url(:medium)), 
+				:url => {:action => 'select_query', :id => query.id} %>	
+			</div>
+		</td>
+	<% end %>
+	</tr>
+<% end %>
+</table>
+
+</div>
+
+</div>

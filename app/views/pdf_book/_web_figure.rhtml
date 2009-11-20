@@ -1,0 +1,32 @@
+<div class="webpage">
+
+[Web]<%= web_figure.id if session[:debug]%>
+
+<span class="title"> <%= link_to web_figure.webpage_title, web_figure.pageurl %> </span><br>
+
+<span class="context">
+<% context =  web_figure.context %>
+
+<%= hk context[:above] %><br>
+<%= image_tag web_figure.photo.url(:thumb), :height => 20, :class => 'thumb' %><br>
+<%= hk context[:below] %>
+
+</span><br>
+
+<span class="link">
+<%= web_figure.pageurl %>
+</span>
+
+-
+<span class="gl">
+<%= link_to 'Cached', "/webpages/#{web_figure.id}.html" %>
+</span>
+
+</div>
+<% if session[:debug] %>
+<div style="height:500px;overflow:auto;">
+<pre>
+<%= web_figure.webpage_text %>
+</pre>
+</div>
+<% end %>

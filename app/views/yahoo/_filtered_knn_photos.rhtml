@@ -1,0 +1,15 @@
+<div id='filtered_knn_photos' class='section'>
+	<strong>We have found similar photos for the selected category:</strong><p>
+	<table><tr>
+	<% @filtered_knn_photos.each do |photo| %>
+		<% select = (@selected_photo and photo.id == @selected_photo.id)%>
+		<td class="<%= select ? "selected" : "unselected" %>">
+			<%= link_to_remote image_tag(photo.url_thumb,:border=>0), 
+				:url => {:action => 'select_photo', :photo_id => photo.id}%>
+		</td>
+	<% end %>
+	</tr></table>
+	
+	
+	
+</div>

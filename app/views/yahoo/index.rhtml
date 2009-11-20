@@ -1,0 +1,232 @@
+<style>
+body, p, td, th, li
+{
+	font-size: 90%;
+	color: #333333;
+	font-family: Arial,Helvetica,sans-serif;
+}
+body{
+	background-image: url(images/yahoo_bg.gif);
+}
+#content{
+	background-color: white;
+	width: 700px;
+	/*height: 1000px;*/
+}
+h1
+{
+	font-size: 130%;
+	font-family: arial;
+	display: block;
+	color: #666666;
+	padding-top: 4px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	margin-top: 0pt;
+	margin-right: 0pt;
+	margin-bottom: 0pt;
+	margin-left: 0pt;
+}
+h2{
+	font-size: 120%;
+}
+input, textarea, button
+{
+	color: #333333;
+	font-size: 105%;
+	font-weight: normal;
+	padding-top: 3px;
+	padding-right: 3px;
+	padding-bottom: 3px;
+	padding-left: 3px;
+	font-family: arial;
+}
+#question_text{
+	font-size: 120%;
+}
+.category_name{
+	font-size: 14px;
+	font-weight: 400;
+ 	color: #528AC6;		
+}
+.formfields{
+	float: left;
+	margin-top: 0pt;
+	margin-right: 0pt;
+	margin-bottom: 10px;
+	margin-left: 0pt;
+	padding-top: 15px;
+	padding-right: 15px;
+	padding-bottom: 15px;
+	padding-left: 15px;
+	width: 458px;
+	background-color: #f0f8e6;
+	text-align: left;
+}
+.section{
+	background-color: #fbfff5;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-bottom: 5px;
+	width: 440px;
+	margin-top: 5px;
+	font-size: 95%;		
+}
+#automatic_answer .content
+{
+	width: 400px;
+	padding: 5px;
+	background-color: #E9F6FC;
+	border-width: 1px;
+	border-color: #9BCEE6;
+	border-style: solid;		
+}
+
+
+#matched_photos
+{	
+}
+
+.matched_photo
+{
+	cursor: pointer;
+}
+
+
+#related_questions
+{
+}
+.selected{
+	border-width: 1px;
+	border-color: #9BCEE6;
+	border-style: solid;	
+	background-color: #E9F6FC;	
+	padding: 5px;
+}
+.nselected{
+	border-width: 5px;
+	border-color: white;
+	border-style: solid;
+}
+
+
+#queries{
+	position: absolute;
+	top: 70px;
+	left: 100px;
+	height: 550px;
+	border: 0px black solid;
+}
+
+
+#queries #form{
+	border: 1px #999999 solid;	
+	padding: 5px;	
+	background-color: white;
+}
+
+#queries table{
+}
+
+#queries td{
+	width: 210px;
+	text-align: center;
+}
+
+a
+{
+	color: #006699;
+	text-decoration: none;
+}
+a:hover
+{
+	color: #006699;
+	text-decoration: underline;
+	cursor: pointer;
+}
+#topbar{
+	height:30px;
+	background-color: #67CE12;
+}
+.special_button{
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 12px;
+	background-color: #4384f0;
+	padding-top: 1px;
+	padding-right: 10px;
+	padding-bottom: 1px;
+	padding-left: 10px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #1e5fc7;
+	border-right-color: #1e5fc7;
+	border-bottom-color: #1e5fc7;
+	border-left-color: #1e5fc7;
+	background-image: url(images/yahoo_button.gif);
+	background-repeat: no-repeat;
+}
+
+.photo img{
+	border: 1px #cccccc solid;
+	padding: 2px;
+}
+
+#ajax_busy {
+			position: absolute;
+			right: 0px;
+			top: 0px;
+            width: 120px;
+            background-color: #fff;
+            color: #000;
+            padding: 4px;}
+
+
+</style>
+<div id="content">
+	
+<div id="topbar">
+		<%= show_spinner %>	
+</div>	
+
+<h1>Upload Your Photo and Ask Your Question</h1>
+<table>
+<tr id="upload_photo">
+	<td valign="top">
+		<h2>1. Upload your photo</h2><p>
+		<center>
+		
+	</td>
+	<td><div class='formfields'>
+
+				
+	
+		<div>
+		<% form_remote_tag :url => '/yahoo/browse' do %>
+			<%= text_field 'query', 'id', :size => 45, :id => 'query_path' %>
+			<%= hidden_field 'query', 'id', :id => 'query_id' %>			
+			<%= submit_tag 'Choose...', :class=>'special_button' %>
+		<% end %>
+		</div>		
+
+		<div id="queries"></div>
+		
+		
+	</div></td>
+</tr>
+
+<tr id="ask" style="display:none">
+	<%= render :partial => 'ask' %>	
+</tr>
+
+</table>
+
+</div>

@@ -1,0 +1,13 @@
+<%if @suggested_categories.size > 0 %>
+	<strong>We suggest these categories based on your question:</strong><p>
+	<% @suggested_categories.each do |category| %>
+		
+		<span class="category_name"><%= category[:path] %></span>
+
+		<% @matched_photos = @matched_photos_for_category[category] %>
+		<% @category = category %>
+		<%= render :partial => 'matched_photos'%>	
+	
+	<% end %>
+	
+<% end %>

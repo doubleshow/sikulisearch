@@ -1,0 +1,93 @@
+<style>
+
+body, p, td, th, li
+{
+	font-size: 90%;
+	color: #333333;
+	font-family: Arial,Helvetica,sans-serif;
+}
+	
+#matches {
+/*	height: 800px;*/
+/*	width: 600px;*/
+/*	overflow: auto;*/
+	border: 1px solid #cccccc;
+}	
+#matches td {
+	border-bottom:1px solid #cccccc;
+}
+
+.photo img{
+	border: 1px #cccccc solid;
+	padding: 2px;
+}
+
+.odd {
+/*	background-color:  #E9E9E9;*/
+}
+
+
+.url {
+	color: #008200;
+}
+
+.title {
+	font-size: 14px;
+}
+
+</style>
+
+
+<table>
+	<th>Query</th>
+	<th>Result</th>
+		
+	<tr>
+	<td valign="top">
+<div id="query" class='photo'>
+
+<a href="<%=@query.photo.url(:original)%>" rel="lightbox" title="Query image">
+<%= image_tag @query.photo.url(:medium) %><br>
+</a>
+Keywords:<br>
+
+<%= text_field_tag 'dd', @query_terms,  :readonly => true %>
+</div>
+
+</td><td>	
+<div id="matches">
+<table cellspacing=0>
+<% @results.each_with_index do |result,i| %>
+	<tr class=<%= cycle ('odd', 'even')%>>
+		<td valign="top" align="center">
+		<%= i + 1 %>
+		</td>
+		<td valign="top" align="center">
+		<div class='photo' style="margin-right:10px;">
+		
+			<%= image_tag result[:photo].url(:medium) %>
+			<!--a href="<%=result[:photo].url(:original)%>" rel="lightbox[result]" title="Result <%=i+1%>">		
+			<%= image_tag result[:photo].url(:medium) %>
+			</a-->
+		
+		</div>
+		</td>
+		<td align="left">
+			<b><%= truncate(result[:book_title], 60)%></b>, 	page <b><%= result[:page_number]%></b>
+			<br>
+			<br>
+			<% result[:text] %>
+			<div class="photo">
+				<a href="<%=result[:image_url]%>" rel="lightbox" title="<%= truncate(result[:book_title], 60)%>, 	page <%= result[:page_number]%>">
+				<%= image_tag result[:image_url], :height=>400%>
+				</d>
+			</div>
+
+		</td>
+	</tr>
+<% end %>
+</table>
+</div>
+</td>
+</tr>
+</table>

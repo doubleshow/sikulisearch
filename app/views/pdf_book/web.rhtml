@@ -1,0 +1,153 @@
+<style>
+.title{
+font-size:150%;
+font-face:normal;
+}
+.link{
+color:green;
+font-style:normal;
+}
+
+td{
+vertical-align: top;
+}
+
+.thumb{
+align:center;
+border: 1px black solid;
+}
+
+.txt{
+height:500px;
+width:800px;OA
+overflow:auto;
+border:1px solid #333333;
+margin:2px;
+}
+
+.webpage{
+width:546px;
+}
+
+.bookmark{
+color: green;
+}
+.result_type{
+color: blue;
+font-size:smaller;
+}
+a:link, a:visited, a:active{
+color: blue;
+}
+.gl a:link, .gl a:visited, .gl a:active{
+color: #7777cc;
+}
+
+.highlight0{
+background-color: yellow;
+}
+.highlight1{
+background-color: cyan;
+}
+.highlight2{
+background-color: green;
+}
+
+</style>
+
+<table><tr><td>
+
+<div id="query">
+<%= image_tag @query_photo.url, :height=>150 %>
+</div>
+
+</td>
+
+<td>
+
+<table>
+
+<% @photos.each do |photo| %>
+
+<tr>
+
+<td align="center">
+<%= image_tag photo.url, :width => 150, :class => 'thumb' %>
+</td>
+
+<td>
+
+
+<% if photo.photoable_type == 'PdfFigure' %>
+
+<% pdf_figure = photo.photoable %>
+
+<span class="result_type">[BOOK]</span>
+
+<span class="title">
+<% title = pdf_figure.pdf_page.pdf_book.title %>
+<%= link_to title, 
+"http://www.amazon.com/s/ref=nb_ss?url=search-alias%3Daps&field-keywords=#{title.gsub(' ','+')}" %>
+</span><br>
+
+<% image_html = image_tag(pdf_figure.photo.url(:thumb),:height=>20,:align=>'middle', :class=>'thumb') %>
+
+<% label = pdf_figure.label %>
+
+<br>
+
+<% if label %>
+<% image_html %>
+<b>Caption: </b>
+(page <%= label[:page] %>)
+<%= hk label[:text] %>
+<% end %>
+ ...
+<br>
+
+<% ref = pdf_figure.ref %>
+
+<b>Text:</b>
+<% if ref[:text]%>
+
+(page <%= ref[:page] %>)
+... <%= hk ref[:text].sub(/#{ref[:name]}/i,image_html) %>
+<% else %>
+
+(page <%= pdf_figure.pdf_page.number %>)
+... <%= hk pdf_figure.pdf_page.first_words %>
+
+<% end %>
+
+<br>
+
+<span class="bookmark">
+<% heading = pdf_figure.pdf_page.heading %>
+<% if not heading.empty? %>
+<%= heading.join(' > ') %>
+<% else %>
+<%= pdf_figure.pdf_page.pdf_book.title %>
+<% end %>
+</span>
+
+- <span class="gl">
+<%= link_to "Preview", pdf_figure.pdf_page.image_url%>
+</span>
+
+<% else %>
+
+<%= render :partial => 'web_figure', :locals => {:web_figure => photo.photoable }%>
+
+
+
+<% end %>
+
+
+</td>
+
+</tr>
+<% end %>
+</table>
+
+</td>
+</tr></table>

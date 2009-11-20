@@ -1,0 +1,11 @@
+<% raise unless category_name %>
+<% raise unless photo %>
+
+<% element_id = "#{category_name}#{photo.id}"%>
+ 
+<div id="<%= element_id%>" class="matched_photo <%= select ? "selected" : "unselected"%>" >
+
+	<%= link_to_remote image_tag(photo.url(:thumb),:border=>0), 
+		:loading => "Effect.BlindUp('automatic_answer');",
+		:url => {:action => 'select_photo', :photo_id => photo.id, :element_id => element_id}%>
+</div>

@@ -1,0 +1,31 @@
+<div id='related_questions'>
+<div class='section'>
+<strong>We have found related questions about these photos:</strong><p>
+	<table>			
+		<% @knns.each do |photo,question| %>
+		<tr>
+			<td align="center">
+				<div class="photo">
+					<%=image_tag photo.url_thumb%>
+				</div>
+			</td>
+			<td><%=link_to_remote question[:text], :url => {:controller => 'question', 
+					:action => 'show', 	:id =>question[:id]}%>
+			- from <%=question[:user]%> - <%=question[:answer_count]%> answer(s) </td>
+		</tr>
+		<% end %>
+	</table>
+	<p>
+	<%= link_to 'Read more questions (15)' %>
+</div>
+
+<div class='section'>	
+<strong>Still can't find an answer you like? </strong><p>
+	<div>
+	<% form_remote_tag :url => '' do %>
+		<%= submit_tag 'Post to the Q/A Forum', :class=>'special_button'%>
+	<% end %>
+	</div>	
+</div>
+
+</div>

@@ -1,0 +1,13 @@
+<% form_remote_tag :url => '/yahoo/ask' do %>
+	<%= error_message_on 'question', 'text' %>
+	<%= text_field 'question', 'text', :size => 58, :id=>'question_text'  %>
+	<%= hidden_field 'question','query_id' %>
+	<% submit_tag 'Ask' %>
+<% end %>
+
+ <%= observe_field :question_text, 
+		:url => { :action => :suggest_categories, :query_id => @question.query_id },
+	    :frequency => 0.5,
+	    :update => :suggest,
+		:with => 'question_text'
+  %>	

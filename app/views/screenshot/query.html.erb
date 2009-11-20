@@ -1,0 +1,67 @@
+<style>
+body, p, td, th, li
+{
+	font-size: 90%;
+	color: #333333;
+	font-family: Arial,Helvetica,sans-serif;
+}	
+	
+#left{
+	padding: 5px;
+}
+#right{
+	padding: 5px;
+}
+.photo {
+	border: 1px #cccccc solid;
+	padding: 2px;
+}
+#sikuli{
+	width: 925px;
+	
+}
+#upload {
+	position: relative;
+	text-align:left;
+	width: 450px;
+	top: -460px;
+	left: 120px;
+	height: 0px;
+}		
+		
+h3{
+	color: #444444;
+}		
+		
+</style>
+
+		
+<div id="sikuli">	
+
+	<%= image_tag 'sikuli.gif' %>
+<div id='upload'>	
+	Choose a screenshot image from your computer:<br>
+	<% form_tag '/screenshot/query', :multipart => true do%>
+		
+	<%= file_field 'query','photo_file', :size => 30%>
+		<!-- <%= text_field 'butterfly','name'%> -->
+		
+	<%= submit_tag "Submit" %>
+	<% end %>	
+	
+	<br>
+	(To capture screenshots, we recommend 
+	using <a href="http://www.mirekw.com/winfreeware/mwsnap.html">MWSnap</a>.)
+</div>
+<h3>Recent queries</h3>
+
+<% @recent_queries.each do |query| %>
+
+<% link_to image_tag(query.photo.url(:thumb), :border=>0, :class=>'photo'), :action => 'query_result', :id => query.id %>
+<%= link_to image_tag(query.photo.url(:thumb), :border=>0, :class=>'photo'), :controller => 'pdf_book', :action => 'query_result', :query_id => query.id, :search_terms => '' %>
+
+<% end %>
+
+</div>	
+
+

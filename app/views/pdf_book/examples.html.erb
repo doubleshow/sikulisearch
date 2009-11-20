@@ -1,0 +1,14 @@
+<table>		
+<% @queries.in_groups_of(2) do |group| %>
+
+	<tr>
+	<% group.compact.each do |query| %>
+		<td>
+		    <%=  image_tag query.photo.url(:original), :class=>'photo'%>
+
+		</td>
+	<% end %>
+	</tr>
+	
+<% end %>
+</table>

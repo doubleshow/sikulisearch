@@ -1,0 +1,87 @@
+<style>
+td{
+vertical-align:top;
+}
+</style>
+<div id="matches">
+
+
+	<table cellspacing=2 style="border:1px solid black" border=1>
+
+	
+
+	<% @results.each_with_index do |result,i| %>
+	<tr>
+			<td align="left" valign="top">
+				<div class="photo">
+				
+				<%= image_tag(result[:figure].photo.url, :width=>200) %>
+
+				<b><%= truncate(result[:book].title, 60)%></b><br>
+				page <b><%= result[:page].number %></b>
+				</div>				
+	
+			</td>
+<td>
+figure id: <%= result[:figure].id %>
+</td>
+<td>
+<%= result[:figure].label%>
+</td>
+
+<td>
+
+<div>
+
+<% labels, refs = result[:page].extract_labels_and_refs %>
+
+<%= result[:book].title %><br>
+page <%= result[:page].number %>
+<p>
+Labels:<br>
+<ul>
+<% labels.each do |x,y| %>
+<li> <b><%= y[:name] %></b> (page <%= y[:page] %>)  <%= y[:text] %></li>
+<% end %>
+</ul>
+
+<p>
+Refs:
+<ul>
+<% refs.each do |x,y| %>
+<li> <b><%= y[:name] %></b> (page <%= y[:page] %>)  <%= y[:text] %></li>
+<% end %>
+</ul>
+
+Suggested label:<br>
+<%= result[:figure].label %>
+<p>
+Suggested Ref:<br>
+<% y = result[:figure].ref %>
+<b><%= y[:name] %></b> (page <%= y[:page] %>)  <%= y[:text] %></li>
+<p>
+URL:<br>
+<% if y[:text]%>
+<% html = image_tag(result[:figure].photo.url(:thumb),:height=>30,:align=>'middle') %>
+<%= y[:text].sub(/#{y[:name]}/i,html) %>
+<% end %>
+
+</div>
+<hr>
+<div>
+<pre style="font-size:10px;"><%= result[:page].text %></pre>
+</div>
+</td>
+			<td>
+				<%= highlight result[:page].text, "Figure" %>
+			</td>
+	</tr>
+	<% end %>
+	
+		
+	
+	
+	</table>
+	
+
+</div>

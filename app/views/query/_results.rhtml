@@ -1,0 +1,19 @@
+<div id=<%="query-#{@query.id}-knns"%>>
+<table ><tr>
+<% @query.results.in_groups_of(4).each do |group| %>
+
+<tr>
+
+<% group.compact.each do |photo| %>
+<td>
+	<%= photo.id %><br>
+	<%= link_to_remote image_tag(photo.url,:height=>200), :url => {:action => 'add_label', :id => @query.id, :label => photo.id }%>
+	<% link_to_remote '[+]', :url => {:action => 'add_label', :id => @query.id, :label => photo.id }%>
+</td>
+<% end %>
+</td>
+<% end %>
+
+</tr></table>
+
+</div>

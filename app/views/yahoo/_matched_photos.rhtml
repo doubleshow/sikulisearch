@@ -1,0 +1,11 @@
+<div id='matched_photos' class='section'>
+	<table><tr>
+	<% @matched_photos.each do |photo| %>
+		<td>
+		<%= render :partial => 'matched_photo',
+				:locals => {:photo => photo, :category_name => @category[:name], :select => false} %>				
+		</td>
+	<% end %>
+	</tr>
+	</table>
+</div>

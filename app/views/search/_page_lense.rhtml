@@ -1,0 +1,58 @@
+<div ex:role="lens" style="margin-bottom:15px;display:none;">
+
+  <table <%= 'style="border: 1px solid #999"' if @amt%>>
+    <tr>
+
+      <td styl="border: 1px solid #AAA; padding: 5px;">
+	
+
+	<div style="width:600px;">	
+	  <span ex:content=".score"></span>
+	  <span ex:if-exists=".tag" class="tag">[<span ex:content=".tag"></span>]</span>
+	  <a ex:href-content=".titleurl"><span ex:content=".title" class="title"></span></a>
+	  
+	</div>
+
+
+	<table width="600px">
+	  <tr><td ex:if-exists=".thumb" width="<%= @amt ? '200px' : '125px'%>">	      
+	      <img ex:if-exists=".thumb" ex:src-content=".thumb" ex:width-content="<%= @amt ? '200px' : '125px'%>" class="thumb"/>   
+	    </td ex:if-exists=".thumb">
+	    <td align="left" style="padding-left:5px">
+	      <span ex:content=".description" class="description"></span><br>
+	      <span ex:content=".source" class="source"></span>          
+	      <span ex:content=".actionLink" class="actionLink"></span>
+	  </td></tr>
+	</table>
+
+  </td>
+
+
+      <% if @amt %>
+      <td align="center" style="border: 1px solid #888;">
+	Is this result
+	<table style="border: 1px solid #444"><tr>
+
+	    <td colspan="3">
+	      Not Useful
+	    </td><td colspan="2" align="right">Very useful</td>
+	  </tr><tr>
+    <% (1..5).each do |x| %>
+    
+      <td valign="middle" align="center" width="100px">
+	<%= x%><br>
+	<input type="radio" ex:name-content=".radio" value="<%= x%>"> 
+      </td>
+<% end %>
+
+      </tr></table><br>
+for the program?<br>
+<img src="<%= @query_photo.url%>" ex:width-content="150px" %>
+      </td>
+      <% end %>
+
+
+
+</tr></table>
+
+</div>

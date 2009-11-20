@@ -1,0 +1,31 @@
+<div id="matches" style="height:550px;width:550px;overflow:auto;">
+
+	<% if @results.size > 0 %>
+	<table cellspacing=2>
+	<% @results.in_groups_of(3,false).each do |group|%>
+	
+		<tr class=<%= cycle ('odd', 'even')%>>
+	<% group.each_with_index do |result,i| %>
+	
+			<td align="left" valign="top">
+				<div class="photo" style="width:165px;overflow:hidden;">
+				
+	<%= link_to_remote image_tag(result[:page].image_url, :height=>200),
+	   :url => { :action => "select_page", :figure_id => result[:figure].id } %>				
+				<b><%= truncate(result[:book].title, 60)%></b><br>
+				page <b><%= result[:page].number %></b>
+				</div>				
+	
+			</td>
+	
+	<% end %>
+	</tr>
+		
+	
+	<% end %>
+	</table>
+	
+	<% else %>
+	0 match found.
+	<% end %>
+</div>

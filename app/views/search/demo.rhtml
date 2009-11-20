@@ -1,0 +1,11 @@
+<table>
+<% @queries.in_groups_of(5).each do |group|%>
+<tr>
+<% group.compact.each do |query| %>
+<td>
+<%= link_to image_tag(query.photo.url,:width=>200), :action => 'exhibit', :id => query.id %>
+</td>
+<% end %>
+</tr>
+<% end %>
+</table>

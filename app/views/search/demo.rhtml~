@@ -1,0 +1,4 @@
+<% @query_photos.each do |photo| %>
+
+
+<% end %>
