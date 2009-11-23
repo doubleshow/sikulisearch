@@ -143,19 +143,19 @@ class WebFigure < ActiveRecord::Base
   end
 
   def webpage_url
-     "webpages/#{id}.html"
+     "data/webpages/#{id}.html"
   end
 
   def webpage_localpath
-     "public/webpages/#{id}.html"
+     "public/data/webpages/#{id}.html"
   end
 
   def webpage_text_localpath
-    "public/webpages/#{id}.txt"
+    "public/data/webpages_text/#{id}.txt"
   end
   
   def open
-    `cygstart public/webpages/#{id}.html`
+    `cygstart public/data/webpages/#{id}.html`
   end
 
   def webpage_text

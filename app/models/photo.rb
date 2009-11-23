@@ -3,7 +3,51 @@ class Photo < ActiveRecord::Base
   belongs_to :photoable, :polymorphic => true
   
   include ActivePhoto
+
+  def self.export
+    
+    Photo.find_all_by_photoable_type("WebFigure").each {|p| 
+      puts "#{p.id} #{p.local_path}"
+      `cp #{p.local_path} export/#{p.id}.jpg`
+    }
+    true
+  end
+
+  def self.lowres
+    Photo.find_all_by_photoable_type("WebFigure").each {|p| 
+      puts "#{p.id} #{p.local_path}"
+      `convert -quality 40 export/#{p.id}.jpg lowres/#{p.id}.jpg`
+    }
+    true
+  end
+
+  def self.thumb
+    Photo.find_all_by_photoable_type("WebFigure").each {|p| 
+      puts "#{p.id} #{p.local_path}"
+      `convert -thumbnail '#{20}x#{20}>' lowres/#{p.id}.jpg thumb/#{p.id}.jpg`
+    }
+    true
+  end
   
+  def self.exportpdf
+    Photo.find_all_by_photoable_type("PdfFigure").each {|p| 
+      puts "#{p.id} #{p.local_path}"
+      `convert #{p.local_path(:original)} -thumbnail '400x400>' -quality 40  lowrespdf/#{p.id}.jpg`
+      `convert lowrespdf/#{p.id}.jpg -thumbnail '20x20>' thumbpdf/#{p.id}.jpg`
+    }
+    true
+  end
+
+  def self.exportquery
+    Photo.find_all_by_photoable_type("Query").each {|p| 
+      puts "#{p.id} #{p.local_path}"      
+      `convert #{p.local_path(:original)} -thumbnail '400x400>' -quality 40  lowrespdf/#{p.id}.jpg`
+      `convert lowrespdf/#{p.id}.jpg -thumbnail '20x20>' thumbpdf/#{p.id}.jpg`
+    }
+    true
+  end
+
+
   def photoable
     Kernel.const_get(photoable_type).find(photoable_id)
   end

@@ -162,7 +162,7 @@ class PdfPage < ActiveRecord::Base
 
   def heading
 
-    lines = open("bookmarks/#{pdf_book.title.gsub(' ','-')}.csv").readlines
+    lines = open("public/data/bookmarks/#{pdf_book.title.gsub(' ','-')}.csv").readlines
 
 
     previous_heading = nil

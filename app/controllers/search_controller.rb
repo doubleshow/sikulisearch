@@ -11,6 +11,12 @@ class SearchController < ApplicationController
     render :action  => 'exhibit', :layout => false
   end
 
+  def demo
+    @queries = [900,1050,1066,1169,1189,1186,1179,684,709,639,
+                1259, 1265, 1200, 1250, 1223, 1240, 1246, 1197, 1241, 
+                1236].map{|x|Query.find(x)}
+  end
+
   def upload
     if request.post?    
       @query = Query.create params[:query].merge({:source=>'upload'})

@@ -39,16 +39,16 @@ module ActivePhoto
   end
   
   def local_root
-    "public/photos"
+    "public/data/photos"
   end
   
   def url_root
-    "/photos"
+    "/data/photos"
   end
-  
   
   def basename(version = :normal)    
     name = "%0.5d.%s" % [id, format]
+    #name = "#{id}"
     case version
     when :original
         "o/" + name
@@ -62,7 +62,8 @@ module ActivePhoto
   end    
   
   def url(version = :normal )    
-    [url_root, sub_directory, basename(version)].join('/')
+    "/data/lowres/#{id}.jpg"
+    #[url_root, sub_directory, basename(version)].join('/')
   end
   
   def local_path(version = :normal)
